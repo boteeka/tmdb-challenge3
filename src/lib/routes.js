@@ -1,19 +1,14 @@
-import {Router} from "wpe-lightning-sdk";
+import { Router } from 'wpe-lightning-sdk';
 
 /**
  * @see docs: https://github.com/rdkcentral/Lightning-SDK/blob/feature/router/docs/plugins/router.md
  */
 
-import {
-     Main, Splash
-} from '../pages';
+import { Main, Splash } from '../pages';
 
-export default () =>{
-
+export default () => {
     // define where the browser should point to on boot
     Router.root('splash', Splash);
-    // Add route for movies
-    Router.route('movies', Main);
 
     /**
      * @todo:
@@ -28,6 +23,8 @@ export default () =>{
      * You also need to add the proper data-provider
      */
 
+    Router.route('home/series', Main);
+    Router.route('home/movies', Main);
 
     Router.start();
-}
+};

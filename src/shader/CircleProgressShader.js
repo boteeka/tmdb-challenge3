@@ -1,7 +1,6 @@
-import {Lightning} from "wpe-lightning-sdk"
+import { Lightning } from 'wpe-lightning-sdk';
 
 export default class CircleProgressShader extends Lightning.shaders.WebGLDefaultShader {
-
     constructor(ctx) {
         super(ctx);
         this._radius = 100;
@@ -30,7 +29,7 @@ export default class CircleProgressShader extends Lightning.shaders.WebGLDefault
     }
 
     set angle(v) {
-        this._angle = v
+        this._angle = v;
         this.redraw();
     }
 
@@ -51,7 +50,7 @@ export default class CircleProgressShader extends Lightning.shaders.WebGLDefault
 
     setupUniforms(operation) {
         super.setupUniforms(operation);
-        const owner = operation.shaderOwner
+        const owner = operation.shaderOwner;
 
         const renderPrecision = this.ctx.stage.getRenderPrecision();
         this._setUniform('radius', this._radius, this.gl.uniform1f);
@@ -59,16 +58,26 @@ export default class CircleProgressShader extends Lightning.shaders.WebGLDefault
         this._setUniform('period', this._period, this.gl.uniform1f);
         this._setUniform('angle', this._angle, this.gl.uniform1f);
         this._setUniform('smooth', this._smooth, this.gl.uniform1f);
-        this._setUniform('color', new Float32Array(lng.StageUtils.getRgbaComponentsNormalized(this._color)), this.gl.uniform4fv)
-        this._setUniform('backgroundColor', new Float32Array(lng.StageUtils.getRgbaComponentsNormalized(this._backgroundColor)), this.gl.uniform4fv)
+        this._setUniform(
+            'color',
+            new Float32Array(lng.StageUtils.getRgbaComponentsNormalized(this._color)),
+            this.gl.uniform4fv
+        );
+        this._setUniform(
+            'backgroundColor',
+            new Float32Array(lng.StageUtils.getRgbaComponentsNormalized(this._backgroundColor)),
+            this.gl.uniform4fv
+        );
 
-        this._setUniform('resolution', new Float32Array([owner._w * renderPrecision, owner._h * renderPrecision]), this.gl.uniform2fv)
+        this._setUniform(
+            'resolution',
+            new Float32Array([owner._w * renderPrecision, owner._h * renderPrecision]),
+            this.gl.uniform2fv
+        );
 
-        this.redraw()
+        this.redraw();
     }
-
 }
-
 
 CircleProgressShader.fragmentShaderSource = `
 

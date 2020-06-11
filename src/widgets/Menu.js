@@ -1,7 +1,6 @@
-import {Lightning, Router} from 'wpe-lightning-sdk';
+import { Lightning, Router } from 'wpe-lightning-sdk';
 
 export default class Menu extends Lightning.Component {
-
     static _template() {
         return {
             Items: {
@@ -9,25 +8,31 @@ export default class Menu extends Lightning.Component {
                 flex: {},
                 Movies: {
                     type: MenuItem,
-                    label: "Movies", id: "movies"
+                    label: 'Movies',
+                    id: 'movies',
                 },
                 Series: {
                     type: MenuItem,
-                    label: "Series", id: "tv"
+                    label: 'Series',
+                    id: 'series',
                 },
                 Exit: {
                     type: MenuItem,
-                    label: "Exit", id: "exit"
-                }
+                    label: 'Exit',
+                    id: 'exit',
+                },
             },
             Focus: {
-                rect: true, colorLeft: 0xff8ecea2, colorRight: 0xff03b3e4,
-                h: 6, y: 128,
+                rect: true,
+                colorLeft: 0xff8ecea2,
+                colorRight: 0xff03b3e4,
+                h: 6,
+                y: 128,
                 transitions: {
-                    alpha: {duration: .3, timingFunction: 'cubic-bezier(0.20, 1.00, 0.80, 1.00)'},
-                    w: {duration: .3, timingFunction: 'cubic-bezier(0.20, 1.00, 0.80, 1.00)'}
-                }
-            }
+                    alpha: { duration: 0.3, timingFunction: 'cubic-bezier(0.20, 1.00, 0.80, 1.00)' },
+                    w: { duration: 0.3, timingFunction: 'cubic-bezier(0.20, 1.00, 0.80, 1.00)' },
+                },
+            },
         };
     }
 
@@ -36,7 +41,7 @@ export default class Menu extends Lightning.Component {
     }
 
     get activeItem() {
-        return this.tag("Items").children[this._index];
+        return this.tag('Items').children[this._index];
     }
 
     _handleDown() {
@@ -50,31 +55,30 @@ export default class Menu extends Lightning.Component {
     }
 
     _handleRight() {
-        if (this._index < this.tag("Items").children.length - 1) {
+        if (this._index < this.tag('Items').children.length - 1) {
             this.setIndex(this._index + 1);
         }
     }
 
     _focus() {
-        this.tag("Focus").w = 0;
-        this.tag("Focus").setSmooth("alpha", 1);
+        this.tag('Focus').w = 0;
+        this.tag('Focus').setSmooth('alpha', 1);
 
         this.setIndex();
     }
 
     _unfocus() {
-        this.tag("Focus").setSmooth("alpha", 0);
+        this.tag('Focus').setSmooth('alpha', 0);
     }
 
     setIndex(index = this._index) {
         this._index = index;
-        this.tag("Focus").patch({
-            smooth: {x: this.activeItem.finalX, w: this.activeItem.finalW}
+        this.tag('Focus').patch({
+            smooth: { x: this.activeItem.finalX, w: this.activeItem.finalW },
         });
-
     }
 
-    _handleEnter(){
+    _handleEnter() {
         /**
          * @todo:
          *
@@ -88,20 +92,20 @@ export default class Menu extends Lightning.Component {
          * ---
          * so based on focused menu item.
          */
+        Router.navigate(`home/${this.activeItem.id}`);
+        Router.restoreFocus();
     }
 
-    _getFocused(){
+    _getFocused() {
         return this.activeItem;
     }
-
 }
 
 class MenuItem extends Lightning.Component {
-
     static _template() {
         return {
-            flexItem: {marginRight: 40},
-            text: {text: "Movies", fontSize: 48, fontFace: "SourceSansPro-Regular"}
+            flexItem: { marginRight: 40 },
+            text: { text: 'Movies', fontSize: 48, fontFace: 'SourceSansPro-Regular' },
         };
     }
 
@@ -109,7 +113,7 @@ class MenuItem extends Lightning.Component {
         this._label = v;
 
         this.patch({
-            text: {text: this._label}
+            text: { text: this._label },
         });
     }
 
@@ -120,5 +124,4 @@ class MenuItem extends Lightning.Component {
     get id() {
         return this._id;
     }
-
 }
